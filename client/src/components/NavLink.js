@@ -7,7 +7,7 @@ const NavLink = () => {
     <Wrapper>
       <Title to="/">⚡HogwartsMore</Title>
       <Motto>Draco Dormiens Nunquam Titillandus</Motto>
-      {/* <SignInButton></SignInButton> */}
+      <SignInButton to="/signin">Sign in</SignInButton>
       {/* {!currentUser ? (
         <SignInButton to="/signin">Sign in</SignInButton>
       ) : (
@@ -22,18 +22,19 @@ const NavLink = () => {
 export default NavLink;
 
 const SignInButton = styled(Link)`
-color: white;
+color: black;
 text-decoration: none;
 `;
 
 const GreetingsButton = styled(Link)`
-color: white;
+color: black;
 text-decoration: none;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  background-color: blueviolet;
 `;
 
 const Title = styled(Link)`

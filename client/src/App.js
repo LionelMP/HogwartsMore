@@ -3,12 +3,18 @@ import styled from "styled-components";
 import GlobalStyles from "./components/GlobalStyles";
 import HomePage from "./components/Home/HomePage";
 import NavLink from "./components/NavLink";
+import SignIn from "./components/SignIn/SignIn";
+import { CurrentUserContext } from "./components/CurrentUser/CurrentUserContext";
 
 
 
 import './App.css';
+import { useContext } from "react";
 
 function App() {
+
+  const { currentUser } = useContext(CurrentUserContext);
+
   return (
     <BrowserRouter>
       <GlobalStyles />
@@ -16,15 +22,13 @@ function App() {
       <div>
         <Routes>
           <Route exact path="/" element={<HomePage />} />
-          {/* <Route exact path="/page-1">
-            Page 1
-          </Route>
-          <Route exact path="/signin">
-            {currentUser ? <Redirect to="/" exact /> : <Signin />}
-          </Route>
-          <Route exact path="/profile/:profileId">
-            <Profile />
-          </Route> */}
+          <Route exact path="/signin" element={currentUser ? <Redirect to="/" exact /> : <SignIn />} />
+           
+            {/* {currentUser ? <Redirect to="/" exact /> : <Signin />} */}
+          {/* </Route> */}
+          {/* <Route exact path="/profile/:profileId"> */}
+            {/* <Profile /> */}
+          {/* </Route> */}
         </Routes>
       </div>
     </BrowserRouter>
