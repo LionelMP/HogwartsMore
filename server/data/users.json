@@ -2,49 +2,41 @@
   {
     "_id": "1",
     "name": "Harry",
-    "house": "Gryffindor",
-    "admin": "false"
+    "house": "Gryffindor"
   },
   {
     "_id": "2",
     "name": "Ron",
-    "house": "Gryffindor",
-    "admin": "false"
+    "house": "Gryffindor"
   },
   {
     "_id": "3",
     "name": "Hermione",
-    "house": "Gryffindor",
-    "admin": "false"
+    "house": "Gryffindor"
+  },
+  {
+    "_id": "4",
+    "name": "Draco",
+    "house": "Slytherin"
+  },
+  {
+    "_id": "5",
+    "name": "Luna",
+    "house": "Ravenclaw"
   },
   {
     "_id": "6",
-    "name": "Draco",
-    "house": "Slytherin",
-    "admin": "false"
-  },
-  {
-    "_id": "12",
-    "name": "Luna",
-    "house": "Ravenclaw",
-    "admin": "false"
+    "name": "Minerva",
+    "house": "Gryffindor"
   },
   {
     "_id": "7",
     "name": "Albus",
-    "house": "Gryffindor",
-    "admin": "true"
+    "house": "Gryffindor"
   },
   {
     "_id": "8",
-    "name": "Minerva",
-    "house": "Gryffindor",
-    "admin": "true"
-  },
-  {
-    "_id": "10",
     "name": "Severus",
-    "house": "Slytherin",
-    "admin": "true"
+    "house": "Slytherin"
   }
 ]

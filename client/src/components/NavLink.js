@@ -24,22 +24,31 @@ export default NavLink;
 const SignInButton = styled(Link)`
 color: black;
 text-decoration: none;
+font-size: 30px;
 `;
 
 const GreetingsButton = styled(Link)`
 color: black;
 text-decoration: none;
+font-size: 30px;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: blueviolet;
+  height: 40px;
 `;
 
 const Title = styled(Link)`
 text-decoration: none;
 color: black;
+font-size: 30px;
 `;
 
-const Motto = styled.div``;
+const Motto = styled.div`
+  font-style: italic;
+  font-size: 20px;
+display: flex;
+align-items: center;
+`;

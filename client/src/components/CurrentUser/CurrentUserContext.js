@@ -9,11 +9,11 @@ export const CurrentUserProvider = ({ children }) => {
     const [users, setUsers] = useState([]);
     
   useEffect(() => {
-    fetch(`/api/users`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUsers(data.data);
-      });
+    // fetch(`/api/user`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setUsers(data.data);
+    //   });
   }, []);
 
     return (

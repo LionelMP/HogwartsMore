@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import Input from "./Input";
+import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
+
 
 const SignIn = () => {
     const [name, setName] =useState("");
@@ -19,7 +21,7 @@ const SignIn = () => {
             <form onSubmit={handleSubmit}>
                 <Input name={name} setName={setName} />
             </form>
-            <NewUserDiv>New in the castle? Click <NewUser to="/regiter">here!</NewUser></NewUserDiv>
+            <NewUserDiv>New in the castle? Click <NewUser to="/register">here!</NewUser></NewUserDiv>
         </Wrapper>
     );
 };
