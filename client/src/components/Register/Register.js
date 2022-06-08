@@ -1,135 +1,150 @@
 import styled from "styled-components";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
+
 
 const Register = () => {
+  const [newName, setNewName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  let house = {gryffindor: 0, ravenclaw: 0, slytherin: 0, hufflepuff: 0}
+  let navigate = useNavigate();
+
   const handleSubmit = (ev) => {
     ev.preventDefault();
+
+    // Sorting test
+    if (spell === "expelliarmus")
+    {
+      house.gryffindor++;
+    }
+
+    // Creating new user
+    fetch(`/api/add-user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: newName,
+        email: newEmail
+      })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      setCurrentUser(data.data);
+      console.log(data.data);
+      if (data.data)
+      {
+        navigate.push(`/`);
+      }
+      else 
+      {
+        alert(
+          `🤷‍♂️ Sorry something want wrong with your reservation.`
+        );
+      }
+    })
   };
+
+  const spells = ["expelliarmus", "protego", "stupefy", "crucio"];
+  const weaknesses = ["weak", "ignorant", "unkind", "boring"];
+  const skills = [
+    "absorb new information",
+    "make new friends",
+    "get what I want",
+    "keep secrets",
+  ];
 
   return (
     <Wrapper>
       <Form onSubmit={handleSubmit}>
         <h1>Registration form</h1>
-        <div class="centeredInput">
-          <label for="name">Name:</label>
-          <input
-            id="name"
-            type="text"
-            size="30"
-            autofocus
-            required
+        <div className="centeredInput">
+          <label htmlFor="name">Name:</label>
+          <input 
+          id="name" 
+          type="text" 
+          size="30" 
+          autoFocus 
+          required 
+          onChange={(e) => {setNewName(e.target.value)}}
           />
-          </div>
-        <Question>You're locked in a duel with a skilled opponent. They fire an unknown spell at you, and you shout…</Question>
-        <div className="centeredInput">           
-          <input
-            type="radio"
-            id="expelliarmus"
-            name="spell"
-            value="expelliarmus"
-          ></input>
-          <label for="spell">Expelliarmus!</label>
         </div>
         <div className="centeredInput">
-          <input
-            type="radio"
-            id="protego"
-            name="spell"
-            value="protego"
-          ></input>
-          <label for="spell">Protego!</label>
+          <label htmlFor="email">Email:</label>
+          <input 
+          id="email" 
+          type="email" 
+          size="30" 
+          required 
+          onChange={(e) => {setNewEmail(e.target.value)}}
+          />
         </div>
-        <div className="centeredInput">
-          <input
-            type="radio"
-            id="stupefy"
-            name="spell"
-            value="stupefy"
-          ></input>
-          <label for="spell">Stupefy!</label>
-        </div>
-        <div className="centeredInput">
-          <input
-            type="radio"
-            id="crucio"
-            name="spell"
-            value="crucio"
-          ></input>
-          <label for="spell">Cruxio!</label>
-        </div>
+        <Question>
+          You're locked in a duel with a skilled opponent. They fire an unknown
+          spell at you, and you shout…
+        </Question>
+        <Answers>
+          {spells.map((spellName, index) => {
+            return (
+              <div key={`spell: ${spellName}, ${index}`}>
+                <input
+                  required={true}
+                  type="radio"
+                  id={spellName}
+                  name="spell"
+                  value={spellName}
+                ></input>
+                <label htmlFor={spellName}>
+                  {spellName.charAt(0).toUpperCase() + spellName.slice(1)}!
+                </label>
+              </div>
+            );
+          })}
+        </Answers>
         <Question>You would be most hurt if a person called you...</Question>
-        <div className="centeredInput">           
-          <input
-            type="radio"
-            id="weak"
-            name="weakness"
-            value="weak"
-          ></input>
-          <label for="weakness">Weak</label>
-        </div>
-        <div className="centeredInput">
-          <input
-            type="radio"
-            id="ignorant"
-            name="weakness"
-            value="ignorant"
-          ></input>
-          <label for="weakness">Ignorant</label>
-        </div>
-        <div className="centeredInput">
-          <input
-            type="radio"
-            id="unkind"
-            name="weakness"
-            value="unkind"
-          ></input>
-          <label for="weakness">Unkind</label>
-        </div>
-        <div className="centeredInput">
-          <input
-            type="radio"
-            id="boring"
-            name="weakness"
-            value="boring"
-          ></input>
-          <label for="weakness">Boring</label>
-        </div>
+        <Answers>
+          {weaknesses.map((weaknessName, index) => {
+            return (
+              <div key={`weakness: ${weaknessName}, ${index}`}>
+                <input
+                  required={true}
+                  type="radio"
+                  id={weaknessName}
+                  name="weakness"
+                  value={weaknessName}
+                ></input>
+                <label htmlFor={weaknessName}>
+                  {weaknessName.charAt(0).toUpperCase() + weaknessName.slice(1)}
+                  .
+                </label>
+              </div>
+            );
+          })}
+        </Answers>
         <Question>Which of your skills are you most proud of?</Question>
-        <div className="centeredInput">           
-          <input
-            type="radio"
-            id="info"
-            name="skill"
-            value="info"
-          ></input>
-          <label for="skill">My ability to absorb new information.</label>
-        </div>
-        <div className="centeredInput">
-          <input
-            type="radio"
-            id="friends"
-            name="skill"
-            value="friends"
-          ></input>
-          <label for="skill">My ability to make new friends.</label>
-        </div>
-        <div className="centeredInput">
-          <input
-            type="radio"
-            id="want"
-            name="skill"
-            value="want"
-          ></input>
-          <label for="skill">My ability to get what I want.</label>
-        </div>
-        <div className="centeredInput">
-          <input
-            type="radio"
-            id="secrets"
-            name="skill"
-            value="secrets"
-          ></input>
-          <label for="skill">My ability to keep secrets.</label>
-        </div>
+        <Answers>
+          {skills.map((skillName, index) => {
+            return (
+              <div key={`skill: ${skillName}, ${index}`}>
+                <input
+                  required={true}
+                  type="radio"
+                  id={skillName}
+                  name="skill"
+                  value={skillName}
+                ></input>
+                <label htmlFor={skillName}>My ability to {skillName}.</label>
+              </div>
+            );
+          })}
+        </Answers>
+        <Button id="submitButton" type="submit">
+          Confirm
+        </Button>
       </Form>
     </Wrapper>
   );
@@ -137,7 +152,17 @@ const Register = () => {
 
 export default Register;
 
+const Button = styled.button`
+  font-size: 25px;
+  margin: 20px 40px 0;
+`;
+
+const Answers = styled.div``;
+
 const Form = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 32px 0 0 0;
   max-width: 475px;
   padding: 24px;
@@ -150,12 +175,12 @@ const Form = styled.div`
 `;
 
 const Question = styled.div`
-    font-weight: 600;
-    margin: 20px 0;
+  font-weight: 600;
+  margin: 30px 0 10px;
 `;
 
 const Wrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
 `;

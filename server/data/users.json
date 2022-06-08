@@ -2,7 +2,8 @@
   {
     "_id": "1",
     "name": "Harry",
-    "house": "Gryffindor"
+    "house": "Gryffindor",
+    "grades": ""
   },
   {
     "_id": "2",
@@ -38,5 +39,10 @@
     "_id": "8",
     "name": "Severus",
     "house": "Slytherin"
+  },
+  {
+    "_id": "9",
+    "name": "Cedric",
+    "house": "Hufflepuff"
   }
 ]

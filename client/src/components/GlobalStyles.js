@@ -63,4 +63,10 @@ export default createGlobalStyle`
     h2 {
       font-size: 28px;
     }
+    .centeredInput {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: red;
+    }
 `;

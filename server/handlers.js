@@ -9,6 +9,37 @@ const options = {
   useUnifiedTopology: true,
 };
 
+// POST to sign user in
+const signin = async (req, res) => {
+  // Creates a new user info
+  const client = new MongoClient(MONGO_URI, options);
+  // let foundUser = null;
+  let email = req.body.email.toLowerCase();
+
+  // Make a try
+  try {
+    await client.connect();
+    const db = client.db("HogwartsMore");
+    console.log("connected!");
+
+    // For a unique user
+    const result = await db.collection("users").findOne({ email });
+
+    console.log(result);
+
+    client.close();
+    console.log("disconnected!");
+
+    result
+      ? res.status(200).json({ status: 200, data: result })
+      : res.status(404).json({ status: 404, data: "Not found" });
+  } catch (err) {
+    // If the try fails
+    console.log(err.stack);
+    res.status(500).json({ status: 500, data: req.body, message: err.message });
+  }
+};
+
 // Get a specific user info
 const getUser = async (req, res) => {
   // Creates a new client
@@ -105,7 +136,8 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+  signin,
   getUser,
   addUser,
-    deleteUser
+  deleteUser,
 };

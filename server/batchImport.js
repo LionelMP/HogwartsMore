@@ -3,7 +3,6 @@ const { v4: uuidv4 } = require("uuid");
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
-console.log(MONGO_URI);
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -28,6 +27,7 @@ const batchImport = async () => {
     // give a new_id with uuid
     users.forEach((existingUser) => {
       existingUser._id = uuidv4();
+      existingUser.email = (existingUser.name.toLowerCase() + "@gmail.com");
     });
 
     await db.collection("users").insertMany(users);

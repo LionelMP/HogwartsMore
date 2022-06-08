@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 const {
+   signin,
    getUser,
    addUser,
    deleteUser
@@ -12,6 +13,8 @@ app.use(express.json())
 app.get('/', (req, res) => {
    res.send('Hello World');
 });
+
+app.post(`/api/signin`, signin);
 
 app.get(`/api/get-user`, getUser);
 

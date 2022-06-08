@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-const Input = ({ name, setName }) => {
+const Input = ({ selectedEmail, setSelectedEmail }) => {
   return (
     <Wrapper>
-      <Label>Which wizard/witch are you ?</Label>
+      <Label>Which is your wizard/witch connection email ?</Label>
       <NameInput
         type="text"
-        placeholder="Harry"
-        value={name}
-        onChange={(ev) => setName(ev.target.value)}
+        placeholder="Harry@gmail.com"
+        value={selectedEmail}
+        onChange={(ev) => setSelectedEmail(ev.target.value)}
       />
       <NameButton type="submit">Log In !</NameButton>
     </Wrapper>
@@ -20,7 +20,7 @@ export default Input;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 300px;
+  margin-top: 200px;
   align-items: center;
 `;
 
