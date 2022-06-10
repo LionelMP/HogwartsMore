@@ -16,7 +16,7 @@ const CommonRoomError = () => {
 export default CommonRoomError;
 
 const ErrorImage = styled.img`
-height: 94vh;
+height: 92vh;
 
 `;
 

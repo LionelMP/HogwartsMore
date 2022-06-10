@@ -5,10 +5,7 @@ import NavLink from "./components/NavLink";
 import SignIn from "./components/SignIn/SignIn";
 import Register from "./components/Register/Register";
 import { CurrentUserContext } from "./components/CurrentUser/CurrentUserContext";
-import Gryffindor from "./components/CommonRoom/Gryffindor";
-import Slytherin from "./components/CommonRoom/Slytherin";
-import Hufflepuff from "./components/CommonRoom/Hufflepuff";
-import Ravenclaw from "./components/CommonRoom/Ravenclaw";
+import CommonRoom from "./components/CommonRoom/CommonRoom";
 import CommonRoomError from "./components/CommonRoom/CommonRoomError";
 
 import "./App.css";
@@ -36,23 +33,8 @@ function App() {
           />
           <Route 
           exact 
-          path="/common-room/Gryffindor" 
-          element={currentUser ? (currentUser.house === "Gryffindor" ? <Gryffindor /> : <CommonRoomError />) : <CommonRoomError />}
-          />
-          <Route 
-          exact 
-          path="/common-room/Slytherin" 
-          element={currentUser ? (currentUser.house === "Slytherin" ? <Slytherin /> : <CommonRoomError />) : <CommonRoomError />}
-          />
-          <Route 
-          exact 
-          path="/common-room/Hufflepuff" 
-          element={currentUser ? (currentUser.house === "Hufflepuff" ? <Hufflepuff /> : <CommonRoomError />) : <CommonRoomError />}
-          />
-          <Route 
-          exact 
-          path="/common-room/Ravenclaw" 
-          element={currentUser ? (currentUser.house === "Ravenclaw" ? <Ravenclaw /> : <CommonRoomError />) : <CommonRoomError />}
+          path="/common-room" 
+          element={currentUser ?  <CommonRoom /> : <CommonRoomError />}
           />
         </Routes>
       </div>

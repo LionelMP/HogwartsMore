@@ -5,10 +5,10 @@ export const breakpoints = { tablet: "600px" };
 export default createGlobalStyle`
     :root {
       --primary-color: rgb(128, 0, 128, 1);
-      --gryffindor-color: rgb(157, 0, 0, 1);
-      --ravenclaw-color: rgb(30, 144, 255, 1);
-      --hufflepuff-color: rgb(255, 165, 0, 1);
-      --slytherin-color: rgb(0, 128, 0, 1);
+      --gryffindor-color: rgb(120, 29, 30, 1);
+      --ravenclaw-color: rgb(9, 66, 81, 1);
+      --hufflepuff-color: rgb(245, 185, 60, 1);
+      --slytherin-color: rgb(28, 80, 50, 1);
       --accent-bg-color: rgba(204, 85, 0, 0.1);
       --page-horizontal-padding: 20px;
       --header-height: 50px;
