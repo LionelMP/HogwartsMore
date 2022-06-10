@@ -1,0 +1,92 @@
+[
+    {
+        "_id": "GryffindorFeed",
+        "house": "Gryffindor",
+        "feed": [
+            {
+                "author": "Albus",
+                "apiName": "Albus Dumbledor",
+                "timestamp": "2022-06-03T10:00:00+00:00",
+                "content": "Welcome to the Gryffindor common room. This is your save space to share messages or images with friends from your house. Please be respectful at all times.",
+                "media": []
+            },            
+            {
+                "author": "Hermione",
+                "timestamp": "2022-06-05T11:09:00+00:00",
+                "content": "Hello, every body! I hope you are ready for the D.A.D.A. exam. Good luck!",
+                "media": []
+            },            
+            {
+                "author": "Ron",
+                "timestamp": "2022-06-05T11:11:40+00:00",
+                "content": "Which exam?!",
+                "media": []
+            },            
+            {
+                "author": "Harry",
+                "timestamp": "2022-06-05T11:15:07+00:00",
+                "content": "Ron...🤦‍♂️",
+                "media": [
+                    {
+                        "type": "img",
+                        "url": "/asset/HarryPotterConfused.gif"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id": "HufflepuffFeed",
+        "house": "Hufflepuff",
+        "feed": [
+            {
+                "author": "Albus",
+                "timestamp": "2022-06-03T10:00:00+00:00",
+                "content": "Welcome to the Hufflepuff common room. This is your save space to share messages or images with friends from your house. Please be respectful at all times.",
+                "media": []
+            },
+            {
+                "author": "Cedric",
+                "timestamp": "2022-06-05T21:19:32+00:00",
+                "content": "Good evening! I can't sleep, does anyone is up for an exploding snap game?",
+                "media": []
+            }      
+        ]
+    },
+    {
+        "_id": "RavenclawFeed",
+        "house": "Ravenclaw",
+        "feed": [
+            {
+                "author": "Albus",
+                "timestamp": "2022-06-03T10:00:00+00:00",
+                "content": "Welcome to the Ravenclaw common room. This is your save space to share messages or images with friends from your house. Please be respectful at all times.",
+                "media": []
+            },
+            {
+                "author": "Luna",
+                "timestamp": "2022-06-03T19:11:08+00:00",
+                "content": "Hi! I already lost my left shoe, does someone find it?",
+                "media": []
+            }        
+        ]
+    },
+    {
+        "_id": "SlytherinFeed",
+        "house": "Slytherin",
+        "feed": [
+            {
+                "author": "Albus",
+                "timestamp": "2022-06-03T10:00:00+00:00",
+                "content": "Welcome to the Slytherin common room. This is your save space to share messages or images with friends from your house. Please be respectful at all times.",
+                "media": []
+            },            
+            {
+                "author": "Draco",
+                "timestamp": "2022-08-03T09:01:00+00:00",
+                "content": "Good morning. Is anyone up to exchange some chocolate frog cards before lunch?",
+                "media": []
+            }
+        ]
+    }
+]

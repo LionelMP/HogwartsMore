@@ -3,21 +3,75 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
 
-
 const Register = () => {
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
+  const [selectedSpell, setSelectedSpell] = useState("");
+  const [selectedWeakness, setSelectedWeakness] = useState("");
+  const [selectedSkill, setSelectedSkill] = useState("");
+  let house = "";
+
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  let house = {gryffindor: 0, ravenclaw: 0, slytherin: 0, hufflepuff: 0}
+
   let navigate = useNavigate();
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
+    let houses = { Gryffindor: 0, Ravenclaw: 0, Slytherin: 0, Hufflepuff: 0 };
 
-    // Sorting test
-    if (spell === "expelliarmus")
-    {
-      house.gryffindor++;
+    console.log("You submitted the form.");
+    ev.preventDefault();
+    // console.log("The new user name is", newName, "her/his email is", newEmail);
+    // console.log("Here's are her/his aswers", selectedSpell, selectedWeakness, selectedSkill);
+
+    // Sorting test, logic should change if new questions added
+    // Adding points
+    // Question 1
+    if (selectedSpell === "expelliarmus") {
+      houses.Gryffindor++;
+    } else if (selectedSpell === "protego") {
+      houses.Hufflepuff++;
+    } else if (selectedSpell === "stupefy") {
+      houses.Ravenclaw++;
+    } else if (selectedSpell === "crucio") {
+      houses.Slytherin++;
+    }
+
+    // Question 2
+    if (selectedWeakness === "weak") {
+      houses.Gryffindor++;
+    } else if (selectedWeakness === "unkind") {
+      houses.Hufflepuff++;
+    } else if (selectedWeakness === "ignorant") {
+      houses.Ravenclaw++;
+    } else if (selectedWeakness === "boring") {
+      houses.Slytherin++;
+    }
+
+    // Question 3
+    if (selectedSkill === "keep secrets") {
+      houses.Gryffindor++;
+    } else if (selectedSkill === "make new friends") {
+      houses.Hufflepuff++;
+    } else if (selectedSkill === "absorb new information") {
+      houses.Ravenclaw++;
+    } else if (selectedSkill === "get what I want") {
+      houses.Slytherin++;
+    }
+
+    // Sorting
+    house = Object.keys(houses).find((key) => houses[key] === 3);
+
+    if (house === undefined) {
+      house = Object.keys(houses).find((key) => houses[key] === 2);
+
+      // If draw
+      if (house === undefined) {
+        const drawHouses = Object.keys(houses).filter(
+          (key) => houses[key] === 1
+        );
+        const randomIndex = Math.floor(Math.random() * (2 - 0 + 1) + 0);
+        house = drawHouses[randomIndex];
+      }
     }
 
     // Creating new user
@@ -29,24 +83,26 @@ const Register = () => {
       },
       body: JSON.stringify({
         name: newName,
-        email: newEmail
+        email: newEmail.toLocaleUpperCase(),
+        house: house,
+      }),
+    })
+      .then((res) => {
+        console.log(res);
+        return res.json();
       })
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      setCurrentUser(data.data);
-      console.log(data.data);
-      if (data.data)
-      {
-        navigate.push(`/`);
-      }
-      else 
-      {
-        alert(
-          `🤷‍♂️ Sorry something want wrong with your reservation.`
-        );
-      }
-    })
+      .then((data) => {
+        if (data.status === 201) {
+          setCurrentUser(data.data);
+          console.log("this is data", data);
+          console.log("this is data.data", data.data);
+          if (data.data) {
+            navigate.push(`/`);
+          }
+        } else {
+          alert(`🤷‍♂️ Sorry something want wrong with your reservation.`);
+        }
+      });
   };
 
   const spells = ["expelliarmus", "protego", "stupefy", "crucio"];
@@ -64,23 +120,27 @@ const Register = () => {
         <h1>Registration form</h1>
         <div className="centeredInput">
           <label htmlFor="name">Name:</label>
-          <input 
-          id="name" 
-          type="text" 
-          size="30" 
-          autoFocus 
-          required 
-          onChange={(e) => {setNewName(e.target.value)}}
+          <input
+            id="name"
+            type="text"
+            size="30"
+            autoFocus
+            required
+            onChange={(e) => {
+              setNewName(e.target.value);
+            }}
           />
         </div>
         <div className="centeredInput">
           <label htmlFor="email">Email:</label>
-          <input 
-          id="email" 
-          type="email" 
-          size="30" 
-          required 
-          onChange={(e) => {setNewEmail(e.target.value)}}
+          <input
+            id="email"
+            type="email"
+            size="30"
+            required
+            onChange={(e) => {
+              setNewEmail(e.target.value);
+            }}
           />
         </div>
         <Question>
@@ -97,6 +157,9 @@ const Register = () => {
                   id={spellName}
                   name="spell"
                   value={spellName}
+                  onChange={(e) => {
+                    setSelectedSpell(e.target.value);
+                  }}
                 ></input>
                 <label htmlFor={spellName}>
                   {spellName.charAt(0).toUpperCase() + spellName.slice(1)}!
@@ -116,6 +179,9 @@ const Register = () => {
                   id={weaknessName}
                   name="weakness"
                   value={weaknessName}
+                  onChange={(e) => {
+                    setSelectedWeakness(e.target.value);
+                  }}
                 ></input>
                 <label htmlFor={weaknessName}>
                   {weaknessName.charAt(0).toUpperCase() + weaknessName.slice(1)}
@@ -136,6 +202,9 @@ const Register = () => {
                   id={skillName}
                   name="skill"
                   value={skillName}
+                  onChange={(e) => {
+                    setSelectedSkill(e.target.value);
+                  }}
                 ></input>
                 <label htmlFor={skillName}>My ability to {skillName}.</label>
               </div>
@@ -159,7 +228,7 @@ const Button = styled.button`
 
 const Answers = styled.div``;
 
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;

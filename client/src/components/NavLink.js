@@ -2,6 +2,10 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { CurrentUserContext } from "./CurrentUser/CurrentUserContext";
 import { useContext } from "react";
+import srcGryffindor from "../asset/GryffindorAnimal.jpeg";
+import srcHufflepuff from "../asset/HufflepuffAnimal.jpeg";
+import srcRavenclaw from "../asset/RavenclawAnimal.jpeg";
+import srcSlytherin from "../asset/SlytherinAnimal.jpeg";
 
 const NavLink = () => {
 
@@ -46,18 +50,18 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: blueviolet;
-  height: 40px;
+  height: 6vh;
   &.Gryffindor {
-    background-color: var(--gryffindor-color);
+    background-image: url(${srcGryffindor});
   }
   &.Ravenclaw {
-    background-color: var(--ravenclaw-color);
+    background-image: url(${srcRavenclaw});
   }
   &.Hufflepuff {
-    background-color: var(--hufflepuff-color);
+    background-image: url(${srcHufflepuff});
   }
   &.Slytherin {
-    background-color: var(--slytherin-color);
+    background-image: url(${srcSlytherin});
   }
 `;
 

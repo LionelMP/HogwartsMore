@@ -5,7 +5,7 @@ const Input = ({ selectedEmail, setSelectedEmail }) => {
     <Wrapper>
       <Label>Which is your wizard/witch connection email ?</Label>
       <NameInput
-        type="text"
+        type="email"
         placeholder="Harry@gmail.com"
         value={selectedEmail}
         onChange={(ev) => setSelectedEmail(ev.target.value)}

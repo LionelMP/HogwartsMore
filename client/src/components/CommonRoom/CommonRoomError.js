@@ -1,14 +1,26 @@
 import styled from "styled-components";
+import src from "../../asset/ArgusFilch.gif";
 
 const CommonRoomError = () => {
     return (
-        <ErrorImage 
-        src="client\public\images\Argus Filch lantern.webp"
+        <Wrapper>
+            <ErrorImage 
+        src={src}
         alt="Argus Filch eye-rolling image"
         />
+        </Wrapper>
+        
     );
 };
 
 export default CommonRoomError;
 
-const ErrorImage = styled.img``;
+const ErrorImage = styled.img`
+height: 94vh;
+
+`;
+
+const Wrapper = styled.div`
+display: flex;
+justify-content: center;
+`;

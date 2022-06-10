@@ -8,7 +8,10 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const users = require("./data/users.json");
+// Getting data from data folder
+const users = require("./data/users.json"); // Users
+// HouseFeeds
+const HouseFeeds = require("./data/HouseFeeds.json"); // Feeds
 
 // Import to database
 const batchImport = async () => {
@@ -22,7 +25,7 @@ const batchImport = async () => {
     // Connecting to the database
     const db = client.db("HogwartsMore");
     console.log("connected!");
-    await db.collection("users").deleteMany(); // revome it 
+    await db.collection("users").deleteMany(); // Remove duplicate
 
     // give a new_id with uuid
     users.forEach((existingUser) => {
@@ -30,9 +33,13 @@ const batchImport = async () => {
       existingUser.email = (existingUser.name.toLowerCase() + "@gmail.com");
     });
 
-    await db.collection("users").insertMany(users);
-    // console.log(users);
-    console.log(users);
+    await db.collection("users").insertMany(users); // Adding to db
+    
+    // Common rooms post
+    // Gryffindor
+    await db.collection("HouseFeeds").deleteMany(); // Remove duplicate
+    await db.collection("HouseFeeds").insertMany(HouseFeeds); // Adding to db   
+
   } catch (err) {
     // If fail
     console.log(err.stack);

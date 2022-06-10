@@ -34,26 +34,26 @@ function App() {
             path="/register"
             element={currentUser ? <Navigate to="/" exact /> : <Register />}
           />
-          {/* <Route 
+          <Route 
           exact 
           path="/common-room/Gryffindor" 
-          element={currentUser.house === "Gryffindor" ? <Gryffindor /> : <CommonRoomError />}
+          element={currentUser ? (currentUser.house === "Gryffindor" ? <Gryffindor /> : <CommonRoomError />) : <CommonRoomError />}
           />
           <Route 
           exact 
           path="/common-room/Slytherin" 
-          element={currentUser.house === "Slytherin" ? <Slytherin /> : <CommonRoomError />}
+          element={currentUser ? (currentUser.house === "Slytherin" ? <Slytherin /> : <CommonRoomError />) : <CommonRoomError />}
           />
           <Route 
           exact 
           path="/common-room/Hufflepuff" 
-          element={currentUser.house === "Hufflepuff" ? <Hufflepuff /> : <CommonRoomError />}
+          element={currentUser ? (currentUser.house === "Hufflepuff" ? <Hufflepuff /> : <CommonRoomError />) : <CommonRoomError />}
           />
           <Route 
           exact 
           path="/common-room/Ravenclaw" 
-          element={currentUser.house === "Ravenclaw" ? <Ravenclaw /> : <CommonRoomError />}
-          /> */}
+          element={currentUser ? (currentUser.house === "Ravenclaw" ? <Ravenclaw /> : <CommonRoomError />) : <CommonRoomError />}
+          />
         </Routes>
       </div>
     </BrowserRouter>
