@@ -4,13 +4,12 @@ const Input = ({ selectedEmail, setSelectedEmail }) => {
   return (
     <Wrapper>
       <Label>Which is your wizard/witch connection email ?</Label>
-      <NameInput
+      <EmailInput
         type="email"
         placeholder="Harry@gmail.com"
-        value={selectedEmail}
         onChange={(ev) => setSelectedEmail(ev.target.value)}
       />
-      <NameButton type="submit">Log In !</NameButton>
+      <EmailButton type="submit">Log In !</EmailButton>
     </Wrapper>
   );
 };
@@ -30,7 +29,7 @@ const Label = styled.label`
   margin-bottom: 50px;
 `;
 
-const NameInput = styled.input`
+const EmailInput = styled.input`
   text-align: center;
   font-size: 30px;
   width: 300px;
@@ -38,7 +37,7 @@ const NameInput = styled.input`
   padding: 0;
 `;
 
-const NameButton = styled.button`
+const EmailButton = styled.button`
   width: 300px;
   font-size: 30px;
   margin: 0;

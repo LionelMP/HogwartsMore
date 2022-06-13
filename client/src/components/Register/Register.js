@@ -18,10 +18,7 @@ const Register = () => {
   const handleSubmit = (ev) => {
     let houses = { Gryffindor: 0, Ravenclaw: 0, Slytherin: 0, Hufflepuff: 0 };
 
-    console.log("You submitted the form.");
     ev.preventDefault();
-    // console.log("The new user name is", newName, "her/his email is", newEmail);
-    // console.log("Here's are her/his aswers", selectedSpell, selectedWeakness, selectedSkill);
 
     // Sorting test, logic should change if new questions added
     // Adding points
@@ -83,7 +80,7 @@ const Register = () => {
       },
       body: JSON.stringify({
         name: newName,
-        email: newEmail.toLocaleUpperCase(),
+        email: newEmail.toLocaleLowerCase(),
         house: house,
       }),
     })
@@ -97,7 +94,7 @@ const Register = () => {
           console.log("this is data", data);
           console.log("this is data.data", data.data);
           if (data.data) {
-            navigate.push(`/`);
+            navigate(`/`);
           }
         } else {
           alert(`🤷‍♂️ Sorry something want wrong with your reservation.`);

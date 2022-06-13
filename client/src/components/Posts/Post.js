@@ -1,14 +1,12 @@
 import styled from "styled-components";
 import { format } from "date-fns";
 import { enCA } from "date-fns/locale";
-import srcHufflepuff from "../../asset/HufflepuffCommonRoom.jpg";
-
 
 const Post = ({ post }) => {
-  let time = format(new Date(post.timestamp), "hh:mm a dd LLL yyyy", {
+  let time = format(new Date(post.timestamp), "dd LLL yyyy hh:mm a", {
     locale: enCA,
   });
-
+    
   return (
     <PostBox>
         <PostInfo>
@@ -19,9 +17,6 @@ const Post = ({ post }) => {
         <PostText>
           {post.content}
         </PostText>
-        <PostMedia>
-          {post.media}
-        </PostMedia>
       </PostContent>
     </PostBox>
   );
@@ -30,24 +25,32 @@ const Post = ({ post }) => {
 export default Post;
 
 const PostBox = styled.div`
-width: calc(100vw/3);
-/* background-image: url(${srcHufflepuff});
-opacity: 0.5; */
-/* display: flex; */
+z-index: 3;
+margin: 3px;
 `;
 
 const PostInfo = styled.div`
 display: flex;
-opacity: 1;
+background-color: rgb(250, 250, 250, 0.7);
+box-sizing: content-box;
 `;
 
-const PostAuthor = styled.div``;
+const PostAuthor = styled.div`
+font-size: 20px;
+margin-right: 5px;
+`;
 
-const PostTime = styled.div``;
+const PostTime = styled.div`
+display: flex;
+align-items: flex-end;
+`;
 
 const PostContent = styled.div`
+padding: 5px;
+background-color: rgb(250, 250, 250, 0.8);
+border-radius: 20px;
 `;
 
-const PostText = styled.div``;
-
-const PostMedia = styled.div``;
+const PostText = styled.div`
+font-size: 20px;
+`;

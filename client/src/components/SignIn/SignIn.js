@@ -8,7 +8,7 @@ const SignIn = () => {
   const [selectedEmail, setSelectedEmail] = useState("");
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -23,15 +23,15 @@ const SignIn = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data.data !== "Not found.") {
         setCurrentUser(data.data);
-        if (data.data) {
-          navigate.push(`/`);
+          navigate(`/`);
         } else {
           alert(
             `🤷‍♂️ Sorry we didn't find this email: "${selectedEmail}" in the whole castle 🏰.`
           );
         }
-      });
+      })
   };
 
   return (

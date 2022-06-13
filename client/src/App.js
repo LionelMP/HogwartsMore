@@ -7,6 +7,7 @@ import Register from "./components/Register/Register";
 import { CurrentUserContext } from "./components/CurrentUser/CurrentUserContext";
 import CommonRoom from "./components/CommonRoom/CommonRoom";
 import CommonRoomError from "./components/CommonRoom/CommonRoomError";
+import List from "./components/FamousWizards/List";
 
 import "./App.css";
 import { useContext } from "react";
@@ -35,6 +36,11 @@ function App() {
           exact 
           path="/common-room" 
           element={currentUser ?  <CommonRoom /> : <CommonRoomError />}
+          />
+          <Route 
+          exact 
+          path="/famous-wizards-list" 
+          element={<List />}
           />
         </Routes>
       </div>

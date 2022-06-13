@@ -24,12 +24,15 @@ const HomePage = () => {
 export default HomePage;
 
 const Welcome = styled.div`
-  /* font-family: "Bluu Next", sans-serif; */
+  /* font-family: "Bluu Next", sans-serif; */  
+  text-shadow: 1px 1px white;
   font-size: 60px;
   text-align: center;
 `;
 
 const Wrapper = styled.div`
+display: flex;
+flex-direction: column;
   min-height: 92vh;
   background-image: url(${src});
   background: linear-gradient(
@@ -43,6 +46,7 @@ const Wrapper = styled.div`
 
 const Countdown = styled.div`
   width: 300px;
+  font-size: 30px;
   &.months {
     border: 4px green dashed;
   }

@@ -13,7 +13,6 @@ const options = {
 const signin = async (req, res) => {
   // Creates a new user info
   const client = new MongoClient(MONGO_URI, options);
-  // let foundUser = null;
   let email = req.body.email.toLowerCase();
 
   // Make a try
@@ -32,7 +31,7 @@ const signin = async (req, res) => {
 
     result
       ? res.status(200).json({ status: 200, data: result })
-      : res.status(404).json({ status: 404, data: "Not found" });
+      : res.status(404).json({ status: 404, data: "Not found." });
   } catch (err) {
     // If the try fails
     console.log(err.stack);
@@ -171,7 +170,6 @@ const getHouseFeed = async (req,res) => {
   // Creates a new client
   const client = new MongoClient(MONGO_URI, options);
   const house = req.params.house; // Identifies the house
-  console.log(house);
 
   // Make a try
   try {
@@ -196,10 +194,56 @@ const getHouseFeed = async (req,res) => {
   }
 };
 
+const addPost = async (req, res) => {
+  // Creates a new client
+  const client = new MongoClient(MONGO_URI, options);
+  const userHouse = req.params.house; // Identifies the house
+  
+  // Make a try
+  try {
+    // Connect to the client
+    await client.connect();
+    const newPost = {};
+
+    // Connecting to database
+    const db = client.db("HogwartsMore");
+    console.log("connected");
+
+    // Verifying    
+    if (typeof req.body.content !== "string")
+    {
+      return res.status(400).json({ status: 400, data: "Invalid post." });
+    }    
+   
+    // All good
+    newPost.author = req.body.name;
+    newPost.timestamp = new Date().toISOString();
+    newPost.content = req.body.content;
+
+  // Insert it in the array of feed already existing 
+    const result = await db.collection("HouseFeeds").updateOne(
+      { house: userHouse },
+      { $push: { feed: newPost } }
+    );
+
+    // Closing connection
+    client.close();
+    console.log("disconnected!");
+    res.status(201).json({
+      status: 201,
+      data: newPost
+    });
+  } catch (err) {
+    console.log(err.stack);
+    res.status(500).json({ status: 500, data: req.body, message: err.message });
+  }
+};
+
 module.exports = {
   signin,
   getUser,
   addUser,
   deleteUser,
-  getHouseFeed
+  getHouseFeed,
+  addPost
 };

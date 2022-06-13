@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
-import { useContext } from "react";
+import { useContext,useEffect, useState } from "react";
 import srcGryffindor from "../../asset/GryffindorCommonRoom.jpg";
 import srcHufflepuff from "../../asset/HufflepuffCommonRoom.jpg";
 import srcRavenclaw from "../../asset/RavenclawCommonRoom.jpg";
 import srcSlytherin from "../../asset/SlytherinCommonRoom.jpg";
 import Post from "../Posts/Post";
-import { useEffect, useState } from "react";
+import NewPost from "../Posts/NewPost";
 
 
 
@@ -16,8 +16,6 @@ const CommonRoom = () => {
   const [ feed, setFeed ] = useState([]);
 
   let src="";
-  // let alt="";
-
 
 useEffect(() => {
   fetch(`/api/get-houseFeed/${currentUser.house}`)
@@ -31,7 +29,7 @@ useEffect(() => {
   // alt=`${currentUser.house} common room image`;
 
   if (currentUser.house === "Gryffindor")
-  {;
+  {
     src=srcGryffindor;
   }
   else if (currentUser.house === "Hufflepuff")
@@ -52,10 +50,26 @@ useEffect(() => {
 
   return (
     <Wrapper className={`${currentUser.house}`}>
+      <FeedWrapper>
+      <Image src={src} />
+        <HouseFeed>
+      {feed.map((post, index) => {
+        return (
+          <Post 
+          key={`postKey: ${post.author}, ${index}`}
+          post={post}
+          />
+        );
+      })}        
+    </HouseFeed>
+    </FeedWrapper>
+    
       <CommonRoomImage 
       src={src} 
       alt={`${currentUser.house} common room image`}>          
       </CommonRoomImage>
+      <FeedWrapper>
+      <Image src={src} />
       <HouseFeed>
         {feed.map((post, index) => {
           return (
@@ -64,18 +78,31 @@ useEffect(() => {
             post={post}
             />
           );
-        })}        
-      </HouseFeed>      
+        })}
+        <NewPost />   
+      </HouseFeed>
+      </FeedWrapper>     
     </Wrapper>
   );
 };
 
 export default CommonRoom;
 
+const FeedWrapper = styled.div``;
+
+const Image = styled.img`
+position: absolute;
+opacity: 0.7;
+width: 33vw;
+overflow: hidden;
+z-index: 1;
+`;
+
 const HouseFeed = styled.div`
 display: flex;
 flex-direction: column;
-height: fit-content;
+z-index: 1;
+/* background-image: url(${srcGryffindor}); */
 `;
 
 const Wrapper = styled.div`
@@ -93,8 +120,8 @@ justify-content: center;
   &.Slytherin {
     background-color: var(--slytherin-color);
   }
+  height: 92vh;
 `;
 
 const CommonRoomImage = styled.img`
-height: 92vh;
 `;
