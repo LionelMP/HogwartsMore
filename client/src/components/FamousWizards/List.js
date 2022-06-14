@@ -1,34 +1,19 @@
 import styled from "styled-components";
-import http from "http";
+import { useContext, useEffect, useState } from "react";
+import { FamousWizardsContext } from "./FamousWizardsContext";
+import CircularProgress from "@mui/material/CircularProgress";
+import CommonRoomError from "../CommonRoom/CommonRoomError";
+import WizardsList from "./WizardsList";
 
 const List = () => {
-    const http = require(`http`);
+    const { status } = useContext(FamousWizardsContext);
     
-    http.get(`http://hp-api.herokuapp.com/api/characters`, (resp) => {
-        "http": require.resolve("stream-http");
-        let data = "";
-
-        resp.on("data", (chunk) => {
-            data += chunk;
-        });
-
-        resp.on("end", () => {
-            console.log(JSON.parse(data));
-        });
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    })
 
     return (
         <Wrapper>
-           {/* { .map((wizar, index) => {
-        return (
-          <Name
-          key={`wizardKey: ${wizardName}, ${index}`}
-          />
-        );
-      })} */}
-
+            {status === "loading" && <CircularProgress />}
+            {status === "error" && <CommonRoomError />}
+            {status === "idle" && <WizardsList />}            
         </Wrapper>
     );
 };
@@ -36,5 +21,3 @@ const List = () => {
 export default List;
 
 const Wrapper = styled.div``;
-
-// const Name = styled(Link)``;

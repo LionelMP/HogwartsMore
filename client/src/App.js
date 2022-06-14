@@ -7,6 +7,7 @@ import Register from "./components/Register/Register";
 import { CurrentUserContext } from "./components/CurrentUser/CurrentUserContext";
 import CommonRoom from "./components/CommonRoom/CommonRoom";
 import CommonRoomError from "./components/CommonRoom/CommonRoomError";
+import WizardDetails from "./components/FamousWizards/WizardDetails";
 import List from "./components/FamousWizards/List";
 
 import "./App.css";
@@ -39,8 +40,13 @@ function App() {
           />
           <Route 
           exact 
-          path="/famous-wizards-list" 
+          path="/famous-wizard" 
           element={<List />}
+          />
+          <Route 
+          exact 
+          path="/famous-wizard/:name" 
+          element={<WizardDetails />}
           />
         </Routes>
       </div>

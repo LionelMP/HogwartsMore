@@ -23,10 +23,7 @@ useEffect(() => {
     .then((data) => {
       setFeed(data.data.feed);
   })
-}, []);
-  
-  
-  // alt=`${currentUser.house} common room image`;
+}, []);  
 
   if (currentUser.house === "Gryffindor")
   {
@@ -35,9 +32,6 @@ useEffect(() => {
   else if (currentUser.house === "Hufflepuff")
   {
     src=srcHufflepuff;
-    // console.log("src"+currentUser.house);
-    // src=("src"+currentUser.house);
-    // console.log(src);
   }
   else if (currentUser.house === "Ravenclaw")
   {
@@ -51,7 +45,10 @@ useEffect(() => {
   return (
     <Wrapper className={`${currentUser.house}`}>
       <FeedWrapper>
-      <Image src={src} />
+      <Image 
+      src={src} 
+      alt={`${currentUser.house} common room image`}
+      />
         <HouseFeed>
       {feed.map((post, index) => {
         return (
@@ -69,7 +66,10 @@ useEffect(() => {
       alt={`${currentUser.house} common room image`}>          
       </CommonRoomImage>
       <FeedWrapper>
-      <Image src={src} />
+      <Image 
+      src={src} 
+      alt={`${currentUser.house} common room image`}
+      />
       <HouseFeed>
         {feed.map((post, index) => {
           return (
@@ -88,7 +88,9 @@ useEffect(() => {
 
 export default CommonRoom;
 
-const FeedWrapper = styled.div``;
+const FeedWrapper = styled.div`
+overflow: hidden;
+`;
 
 const Image = styled.img`
 position: absolute;
@@ -102,10 +104,11 @@ const HouseFeed = styled.div`
 display: flex;
 flex-direction: column;
 z-index: 1;
-/* background-image: url(${srcGryffindor}); */
+overflow: hidden;
 `;
 
 const Wrapper = styled.div`
+overflow: hidden;
 display: flex;
 justify-content: center;
   &.Gryffindor {
@@ -124,4 +127,5 @@ justify-content: center;
 `;
 
 const CommonRoomImage = styled.img`
+z-index: 3;
 `;

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import usePersistedState from "./UsePersistedState";
 
 export const CurrentUserContext = createContext(null);

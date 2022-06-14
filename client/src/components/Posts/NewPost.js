@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
+import { GrSend } from "react-icons/gr";
 
 const NewPost = () => {
     const [message, setMessage] = useState("");
@@ -36,7 +37,7 @@ const NewPost = () => {
             setMessage(e.target.value);
           }}
         />
-        <PostButton type="submit">Post !</PostButton>
+        <PostButton type="submit">Post ! <GrSend /></PostButton>
       </Form>
     </Wrapper>
   );
@@ -56,6 +57,9 @@ z-index: 3;
 
 const PostInput = styled.input`
     width: 400px;
+    font-size: 15px;
 `;
 
-const PostButton = styled.button``;
+const PostButton = styled.button`
+font-size: 15px;
+`;
