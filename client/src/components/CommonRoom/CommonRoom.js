@@ -79,7 +79,7 @@ useEffect(() => {
             />
           );
         })}
-        <NewPost />   
+        <NewPost feed={feed} setFeed={setFeed} />   
       </HouseFeed>
       </FeedWrapper>     
     </Wrapper>

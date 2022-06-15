@@ -264,26 +264,26 @@ const addMark = async (req, res) => {
     await client.connect();
     const newMark = {};
     const course = req.body.course;
-    const userName = req.body.name
+    const userEmail = req.body.email
 
     // Connecting to database
     const db = client.db("HogwartsMore");
     console.log("connected");
 
     newMark.course = course;
-    newMark.score = req.body.score;
+    newMark.mark = req.body.mark;
 
     // Insert it in the array of marks
     const result = await db
       .collection("users")
-      .updateOne({ name: userName }, { $push: { marks: newMark } });
+      .updateOne({ email: userEmail }, { $set:  { marks: newMark } });
 
     // Closing connection
     client.close();
     console.log("disconnected!");
     res.status(201).json({
       status: 201,
-      data: newPost,
+      data: newMark,
     });
   } catch (err) {
     console.log(err.stack);

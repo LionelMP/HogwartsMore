@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import Input from "./Input";
 import Password from "./Password";
 import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
+import src from "../../asset/HogwartsBackground.jpg";
 
 const SignIn = () => {
   const [selectedEmail, setSelectedEmail] = useState("");
@@ -38,11 +39,10 @@ const SignIn = () => {
 
   return (
     <Wrapper>
-      <div>SignIn</div>
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Input selectedEmail={selectedEmail} setSelectedEmail={setSelectedEmail} />
         <Password selectedPassword={selectedPassword} setSelectedPassword={setSelectedPassword} />
-      </form>
+      </Form>
       <NewUserDiv>
         New in the castle? Click <NewUser to="/register">here!</NewUser>
       </NewUserDiv>
@@ -52,9 +52,21 @@ const SignIn = () => {
 
 export default SignIn;
 
+const Form = styled.form`
+`;
+
+
 const Wrapper = styled.div`
   width: 600px;
-  margin: auto;
+  margin: auto;  
+  min-height: 92vh;
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 50%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    url(${src}) no-repeat;
 `;
 
 const NewUserDiv = styled.div`

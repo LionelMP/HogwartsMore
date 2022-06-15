@@ -22,7 +22,10 @@ const NavLink = () => {
   // Make conditional rendering if user logged in or not
   return (
     <Wrapper className={currentUser ? `${currentUser.house}` : ""}>
-      <Title to="/">⚡HogwartsMore</Title>
+      <Title to="/">
+        ⚡HogwartsMore
+        <HomeText>Home page</HomeText>
+        </Title>
       <Motto>Draco Dormiens Nunquam Titillandus</Motto>
       {!currentUser ? (
         <SignInButton to="/signin">Sign in</SignInButton>
@@ -42,6 +45,10 @@ const NavLink = () => {
 };
 
 export default NavLink;
+
+const HomeText = styled.div`
+font-size: 20px;
+`;
 
 const LogOut = styled.div`
 :hover{
@@ -103,6 +110,8 @@ const Title = styled(Link)`
   text-shadow: 1px 1px black;
   font-size: 30px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 

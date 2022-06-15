@@ -8,6 +8,7 @@ const Post = ({ post }) => {
   let time = format(new Date(post.timestamp), "dd LLL yyyy hh:mm a", {
     locale: enCA,
   });
+
   
   // Evaluating the freshness of a message
   let postingTime = new Date(post.timestamp).getTime();

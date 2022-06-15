@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
 import { GrSend } from "react-icons/gr";
 
-const NewPost = () => {
+const NewPost = ({ feed, setFeed }) => {
     const [message, setMessage] = useState("");
     const { currentUser } = useContext(CurrentUserContext);
 
@@ -20,7 +20,9 @@ const NewPost = () => {
         })
         .then((res) => res.json())
         .then((data) => {
-            window.location.reload(true);
+          feed.push(data.data);
+          setFeed(feed.slice());
+          setMessage("");
         })
     };
 
@@ -31,6 +33,7 @@ const NewPost = () => {
           id="postContent"
           type="text"
           size="300"
+          value={message}
           placeholder="Write your message here, no more than 300 caracters."
           required
           onChange={(e) => {

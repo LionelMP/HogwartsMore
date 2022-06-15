@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
 import Passwords from "./Passwords";
+import src from "../../asset/HogwartsBackground.jpg";
 
 const Register = () => {
   const [newName, setNewName] = useState("");
@@ -245,6 +246,7 @@ const Button = styled.button`
 const Answers = styled.div``;
 
 const Form = styled.form`
+margin-top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -267,5 +269,14 @@ const Question = styled.div`
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  height: 92vh;
+  width: 100%;
+  background-size: cover;
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 50%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    url(${src}) no-repeat;
 `;

@@ -3,46 +3,54 @@
     "_id": "1",
     "name": "Harry",
     "house": "Gryffindor",
-    "grades": ""
+    "marks": [{"course": "potion", "mark": 0}]
   },
   {
     "_id": "2",
     "name": "Ron",
-    "house": "Gryffindor"
+    "house": "Gryffindor",
+    "marks": [{"course": "potion", "mark": 0}]
   },
   {
     "_id": "3",
     "name": "Hermione",
-    "house": "Gryffindor"
+    "house": "Gryffindor",
+    "marks": [{"course": "potion", "mark": 0}]
   },
   {
     "_id": "4",
     "name": "Draco",
-    "house": "Slytherin"
+    "house": "Slytherin",
+    "marks": [{"course": "potion", "mark": 0}]
   },
   {
     "_id": "5",
     "name": "Luna",
-    "house": "Ravenclaw"
+    "house": "Ravenclaw",
+    "marks": [{"course": "potion", "mark": 0}]
   },
   {
     "_id": "6",
     "name": "Minerva",
-    "house": "Gryffindor"
+    "house": "Gryffindor",
+    "marks": [{"course": "potion", "mark": 0}]
   },
   {
     "_id": "7",
     "name": "Albus",
-    "house": "Gryffindor"
+    "house": "Gryffindor",
+    "marks": [{"course": "potion", "mark": 0}]
   },
   {
     "_id": "8",
     "name": "Severus",
-    "house": "Slytherin"
+    "house": "Slytherin",
+    "marks": [{"course": "potion", "mark": 0}]
   },
   {
     "_id": "9",
     "name": "Cedric",
-    "house": "Hufflepuff"
+    "house": "Hufflepuff",
+    "marks": [{"course": "potion", "mark": 0}]
   }
 ]

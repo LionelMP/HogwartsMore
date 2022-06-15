@@ -38,7 +38,9 @@ const HomePage = () => {
           </AnnouncementMessages>
         </Announcements>
       </AnnouncementsBox>
-      <Welcome>Welcome {currentUser.name} to HogwartsMore !</Welcome>
+      {currentUser && (
+        <Welcome>Welcome {currentUser.name} to HogwartsMore !</Welcome>
+      )}
       <HomePageInfo>
         <LeftHandSideWrapper>
           <Countdown className={`${borderClass}`}>{countdown}</Countdown>
@@ -47,6 +49,12 @@ const HomePage = () => {
             <MiniMap src={srcMiniMap} />
           </MapWrapper>
         </LeftHandSideWrapper>
+        {currentUser && (
+          <MiddleWrapper>
+            <PassTests>Pass your tests</PassTests>
+            <PotionLink to="potion-class">Potions</PotionLink>
+          </MiddleWrapper>
+        )}
         {status === "loading" && <CircularProgress />}
         {status === "error" && <CommonRoomError />}
         {status === "idle" && (
@@ -68,6 +76,30 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+const PassTests = styled.div`
+  text-shadow: 1px 1px white;
+  font-size: 40px;
+  text-decoration: underline solid blue 3px;
+  color: black;
+  margin-bottom: 50px;
+`;
+
+const PotionLink = styled(Link)`
+  text-shadow: 1px 1px white;
+  font-size: 40px;
+  text-decoration: none;
+  color: black;
+`;
+
+const MiddleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(250, 250, 250, 0.5);
+  padding: 20px;
+  border-radius: 20px;
+`;
 
 const AnnouncementMessages = styled.span`
   margin-right: 100px;
@@ -92,7 +124,7 @@ const MiniMap = styled.img`
 `;
 
 const LeftHandSideWrapper = styled.div`
-margin-left: 20px;
+  margin-left: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -117,11 +149,11 @@ const RightHandSideWrapper = styled.div`
 `;
 
 const RandomWizardText = styled.div`
-margin-top: 5px;
-padding: 10px;
-border-radius: 50px;
-width: 50%;
-text-align: center;
+  margin-top: 5px;
+  padding: 10px;
+  border-radius: 50px;
+  width: 50%;
+  text-align: center;
   font-size: 30px;
   color: rgb(190, 154, 99, 1);
   background-color: rgb(52, 0, 52, 1);
@@ -191,7 +223,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 92vh;
-  background-image: url(${src});
   background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0) 0%,

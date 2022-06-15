@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const PotionClass = () => {
   
@@ -9,39 +9,39 @@ const PotionClass = () => {
   const [SelectedAnswerTo1, setSelectedAnswerTo1] = useState(null);
   const [SelectedAnswerTo2, setSelectedAnswerTo2] = useState(null);
   const [SelectedAnswerTo3, setSelectedAnswerTo3] = useState(null);
-  let navigate = useNavigate();
+  const [submitTest, setSubmitTest] = useState(null);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
     // Counting points
     // Question 1
-    if (question1 === "A potion to cure boils") {
+    if (SelectedAnswerTo1 === "A potion to cure boils") {
       score++;
     }
     // Question 2
-    if (question2 === "Acid green") {
+    if (SelectedAnswerTo2 === "Acid green") {
       score++;
     }
     // Question 3
-    if (question3 === "Draught of Living Death") {
+    if (SelectedAnswerTo3 === "Draught of Living Death") {
       score++;
     }
 
-    fetch(`/api/add-mark/potion`, {
+    fetch(`/api/add-mark`, {
       method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
             },
-            body: JSON.stringify({ course: "potion", name: currentUser.name })
+            body: JSON.stringify({ course: "potion", email: currentUser.email, mark: score })
     })
     .then((res) => res.json())
-    .then(() => {
-      navigate(`/`);
+    .then((data) => {
+      setSubmitTest(data.data.mark);
     })
   };
-  const score = 0;
+  let score = 0;
 
   const question1 = [
     "Polyjuice Potion",
@@ -64,7 +64,8 @@ const PotionClass = () => {
 
   return (
     <Wrapper>
-      <Form onSubmit={handleSubmit}>
+      {!submitTest 
+      ?<Form onSubmit={handleSubmit}>
         <Title>Potion class test</Title>
         <Question>
           In Harry’s first lesson with Snape, what is the first potion the class
@@ -132,16 +133,83 @@ const PotionClass = () => {
             );
           })}
         </Answers>
+        <Button id="submitButton" type="submit">
+          Confirm
+          </Button>
       </Form>
+      : <MarkWrapper>
+        <YourMark>You hit: {score}/3</YourMark>
+        <Buttons>
+          <HomeLink to="/">Home</HomeLink>
+          <CommonRoomLink to="/common-room">Common Room</CommonRoomLink>
+        </Buttons>        
+          </MarkWrapper>
+      }
+      
     </Wrapper>
   );
 };
 
 export default PotionClass;
 
-const Wrapper = styled.div``;
+const CommonRoomLink = styled(Link)`
+text-shadow: 1px 1px white;
+font-size: 40px;
+text-decoration: none;
+color: black;
+`;
 
-const Form = styled.div``;
+const HomeLink = styled(Link)`
+text-shadow: 1px 1px white;
+font-size: 40px;
+text-decoration: none;
+color: black;
+`;
+
+const Buttons = styled.div`
+width: 600px;
+display: flex;
+justify-content: space-between;
+`;
+
+const MarkWrapper = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin-top: 100px;
+`;
+
+const YourMark = styled.div`
+font-size: 40px;
+margin-bottom: 400px;
+`;
+
+const Button = styled.button`
+  font-size: 25px;
+  margin: 20px 40px 0;
+`;
+
+const Wrapper = styled.div`
+display: flex;
+justify-content: center;
+margin-top: 100px;
+`;
+
+const Form = styled.form`
+display: flex;
+flex-direction: column;
+justify-content: center;
+margin: 32px 0 0 0;
+max-width: 475px;
+padding: 24px;
+background-color: white;
+border-radius: 16px;
+box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+  0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035),
+  0 22.3px 17.9px rgba(0, 0, 0, 0.042), 0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+  0 100px 80px rgba(0, 0, 0, 0.07);
+`;
 
 const Title = styled.div``;
 
