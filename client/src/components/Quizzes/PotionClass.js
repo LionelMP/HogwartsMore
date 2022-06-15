@@ -1,79 +1,140 @@
 import styled from "styled-components";
+import { useState, useContext } from "react";
+import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
+import { useNavigate } from "react-router-dom";
 
 const PotionClass = () => {
-    const Question1 = [
-        "Polyjuice Potion",
-        "A potion to cure boils",
-        "Confusing Concoction",
-        "An antidote to common poisions"
-    ];
-    const Question2 = [
-        "Midnight blue",
-        "Bright orange",
-        "Acid green",
-        "Glimmering gold"
-    ];
-    const Question3 = [
-        "Draught of Peace",
-        "Draught of Living Death",
-        "Pepperup Potion",
-        "Wolfsbane Potion"
-    ];
-    const Question4 = [
-        "Leeches",
-        "Shrivelfig",
-        "Lacewing flies",
-        "Fluxweed",
-        "Knotgrass"
-    ];
-    const Question5 = [
-        "Phyllida Spore",
-        "Adalbert Waffling",
-        "Emeric Switch",
-        "Arsenius Jigger"
-    ];
-    const Question6 = [
-        "True",
-        "False"
-    ];
-    const Question7 = [
-        "Amortentia",
-        "Elixir of Life",
-        "Baruffio's Brain Elixir",
-        "Pepperup Potion"
-    ];
-    const Question8 = [
-        "Advanced Potion Making",
-        "Magical Drafts and Potions",
-        "Weird Wizardind Dilemmas and Their Solutions",
-        "Moste Potente Potions"
-    ];
-    const Question9 = [
-        "Silver",
-        "Green",
-        "None, it's clear",
-        "Frothy white"
-    ];
-    const Question10 = [
-        "One is an insect the other a plant",
-        "One is red the other orange",
-        "None they are different names for the same plant",
-        "One is big the other really small"
-    ];
+  
+  const { currentUser } = useContext(CurrentUserContext);
+  const [SelectedAnswerTo1, setSelectedAnswerTo1] = useState(null);
+  const [SelectedAnswerTo2, setSelectedAnswerTo2] = useState(null);
+  const [SelectedAnswerTo3, setSelectedAnswerTo3] = useState(null);
+  let navigate = useNavigate();
 
-    return (
-        <Wrapper>
-            <Form onSubmit={handleSubmit}>
-                <Title>Potion class test</Title>
-                <Question>
-                In Harry’s first lesson with Snape, what is the first potion the class learn to make?
-                </Question>
-                <Answers>
-                    {.map(())}
-                </Answers>
-            </Form>
-        </Wrapper>
-    );
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+
+    // Counting points
+    // Question 1
+    if (question1 === "A potion to cure boils") {
+      score++;
+    }
+    // Question 2
+    if (question2 === "Acid green") {
+      score++;
+    }
+    // Question 3
+    if (question3 === "Draught of Living Death") {
+      score++;
+    }
+
+    fetch(`/api/add-mark/potion`, {
+      method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify({ course: "potion", name: currentUser.name })
+    })
+    .then((res) => res.json())
+    .then(() => {
+      navigate(`/`);
+    })
+  };
+  const score = 0;
+
+  const question1 = [
+    "Polyjuice Potion",
+    "A potion to cure boils",
+    "Confusing Concoction",
+    "An antidote to common poisions",
+  ];
+  const question2 = [
+    "Midnight blue",
+    "Bright orange",
+    "Acid green",
+    "Glimmering gold",
+  ];
+  const question3 = [
+    "Draught of Peace",
+    "Draught of Living Death",
+    "Pepperup Potion",
+    "Wolfsbane Potion",
+  ];
+
+  return (
+    <Wrapper>
+      <Form onSubmit={handleSubmit}>
+        <Title>Potion class test</Title>
+        <Question>
+          In Harry’s first lesson with Snape, what is the first potion the class
+          learn to make?
+        </Question>
+        <Answers>
+          {question1.map((answer1, index) => {
+            return (
+              <div key={`answerTo1: ${answer1}, ${index}`}>
+                <input
+                  required={true}
+                  type="radio"
+                  id={answer1}
+                  name="answerTo1"
+                  value={answer1}
+                  onChange={(e) => {
+                    setSelectedAnswerTo1(e.target.value);
+                  }}
+                ></input>
+                <label htmlFor={answer1}>{answer1}</label>
+              </div>
+            );
+          })}
+        </Answers>
+        <Question>What colour is a Shrinking Solution supposed to be?</Question>
+        <Answers>
+          {question2.map((answer2, index) => {
+            return (
+              <div key={`answerTo2: ${answer2}, ${index}`}>
+                <input
+                  required={true}
+                  type="radio"
+                  id={answer2}
+                  name="answerTo2"
+                  value={answer2}
+                  onChange={(e) => {
+                    setSelectedAnswerTo2(e.target.value);
+                  }}
+                ></input>
+                <label htmlFor={answer2}>{answer2}</label>
+              </div>
+            );
+          })}
+        </Answers>
+        <Question>
+          What would you get if you added powdered root of asphodel to an
+          infusion of wormwood?
+        </Question>
+        <Answers>
+          {question3.map((answer3, index) => {
+            return (
+              <div key={`answerTo3: ${answer3}, ${index}`}>
+                <input
+                  required={true}
+                  type="radio"
+                  id={answer3}
+                  name="answerTo3"
+                  value={answer3}
+                  onChange={(e) => {
+                    setSelectedAnswerTo3(e.target.value);
+                  }}
+                ></input>
+                <label htmlFor={answer3}>{answer3}</label>
+              </div>
+            );
+          })}
+        </Answers>
+      </Form>
+    </Wrapper>
+  );
 };
 
 export default PotionClass;
@@ -87,7 +148,6 @@ const Title = styled.div``;
 const Question = styled.div``;
 
 const Answers = styled.div``;
-
 
 //Questions
 
@@ -109,46 +169,3 @@ const Answers = styled.div``;
 // Draught of Living Death ---
 // Pepperup Potion
 // Wolfsbane Potion
-
-// What ingredients do you need to make a Polyjuice Potion? (MCQ)
-// Leeches-
-// Shrivelfig
-// Lacewing flies-
-// Fluxweed-
-// Knotgrass-
-
-// Who was the writer of Magical Drafts and Potions?
-// Phyllida Spore
-// Adalbert Waffling
-// Emeric Switch
-// Arsenius Jigger ---
-
-// Muggles can make potions if they had the right ingredients. True or false?
-// True
-// False ---
-
-// Which potion is distinctive because of its ‘mother-of-pearl sheen’?
-// Amortentia ---
-// Elixir of Life
-// Baruffio's Brain Elixir
-// Pepperup Potion
-
-// In which potions book can we read to learn how to make Polyjuice Potion?
-// Advanced Potion Making
-// Magical Drafts and Potions
-// Weird Wizardind Dilemmas and Their Solutions
-// Moste Potente Potions ---
-
-// What colour is Veritaserum?
-// Silver
-// Green
-// None, it's clear ---
-// Frothy white
-
-// What is the difference between monkshood and wolfsbane?
-// One is an insect the other a plant
-// One is red the other orange
-// None they are different names for the same plant
-// One is big the other really small
-
-

@@ -7,7 +7,8 @@ const {
    addUser,
    deleteUser,
    getHouseFeed,
-   addPost
+   addPost,
+   addMark
 } = require("./handlers");
 
 app.use(express.json())
@@ -28,6 +29,8 @@ app.get(`/api/get-houseFeed/:house`, getHouseFeed);
 
 // Add a post but update the feed
 app.patch(`/api/add-post/:house/:_id`, addPost);
+
+app.patch(`/api/add-mark`, addMark);
 
 
 app.listen(8000);

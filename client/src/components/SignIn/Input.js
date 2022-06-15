@@ -9,7 +9,6 @@ const Input = ({ selectedEmail, setSelectedEmail }) => {
         placeholder="Harry@gmail.com"
         onChange={(ev) => setSelectedEmail(ev.target.value)}
       />
-      <EmailButton type="submit">Log In !</EmailButton>
     </Wrapper>
   );
 };

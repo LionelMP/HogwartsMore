@@ -9,6 +9,8 @@ import CommonRoom from "./components/CommonRoom/CommonRoom";
 import CommonRoomError from "./components/CommonRoom/CommonRoomError";
 import WizardDetails from "./components/FamousWizards/WizardDetails";
 import List from "./components/FamousWizards/List";
+import Map from "./components/Map/Map";
+import PotionClass from "./components/Quizzes/PotionClass";
 
 import "./App.css";
 import { useContext } from "react";
@@ -47,6 +49,16 @@ function App() {
           exact 
           path="/famous-wizard/:name" 
           element={<WizardDetails />}
+          />
+          <Route 
+          exact 
+          path="/map" 
+          element={<Map />}
+          />
+          <Route 
+          exact 
+          path="/potion-class" 
+          element={<PotionClass />}
           />
         </Routes>
       </div>

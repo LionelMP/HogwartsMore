@@ -8,6 +8,7 @@ import CommonRoomError from "../CommonRoom/CommonRoomError";
 import src from "../../asset/HogwartsBackground.jpg";
 import countdownFunc from "../../helpers/countdown";
 import srcChocoFrogCard from "../../asset/ChocolateFrogCard.png";
+import srcMiniMap from "../../asset/ParchmentMaraudersMap.png";
 
 const HomePage = () => {
   const { currentUser } = useContext(CurrentUserContext);
@@ -27,22 +28,39 @@ const HomePage = () => {
     <Wrapper>
       <AnnouncementsBox>
         <Announcements>
-          The third-floor corridor on the right-hand side is out of bounds to
-          everyone who does not wish to die a very painful death. Students who
-          witnessed the incident during Charms class on Friday the 13th are
-          asked to report to the infirmary for injury control.
+          <AnnouncementMessages>
+            The third-floor corridor on the right-hand side is out of bounds to
+            everyone who does not wish to die a very painful death.
+          </AnnouncementMessages>
+          <AnnouncementMessages>
+            Students who witnessed the incident during Charms class on Friday
+            the 13th are asked to report to the infirmary for injury control.
+          </AnnouncementMessages>
         </Announcements>
       </AnnouncementsBox>
-      <Welcome>Welcome to HogwartsMore !</Welcome>
+      <Welcome>Welcome {currentUser.name} to HogwartsMore !</Welcome>
       <HomePageInfo>
-        <Countdown className={`${borderClass}`}>{countdown}</Countdown>
+        <LeftHandSideWrapper>
+          <Countdown className={`${borderClass}`}>{countdown}</Countdown>
+          <MapWrapper to="/map">
+            <MapText>Are you lost in the castle ?</MapText>
+            <MiniMap src={srcMiniMap} />
+          </MapWrapper>
+        </LeftHandSideWrapper>
         {status === "loading" && <CircularProgress />}
         {status === "error" && <CommonRoomError />}
         {status === "idle" && (
-          <RandomWizard to={`/famous-wizard/${randomWizard.name}`}>
-            <RandomWizardText>Discover a famous new wizard !</RandomWizardText>
-            <Image src={srcChocoFrogCard} />
-          </RandomWizard>
+          <RightHandSideWrapper>
+            <RandomWizard to={`/famous-wizard/${randomWizard.name}`}>
+              <Image src={srcChocoFrogCard} />
+              <RandomWizardText>
+                Discover a famous new wizard !
+              </RandomWizardText>
+            </RandomWizard>
+            <FamousWizardList to="/famous-wizard">
+              Or get the Chocolate Frog Cards list
+            </FamousWizardList>
+          </RightHandSideWrapper>
         )}
       </HomePageInfo>
     </Wrapper>
@@ -51,9 +69,62 @@ const HomePage = () => {
 
 export default HomePage;
 
-const RandomWizardText = styled.div`
-  font-size: 30px;
+const AnnouncementMessages = styled.span`
+  margin-right: 100px;
+`;
+
+const MapWrapper = styled(Link)`
+  margin-top: 50px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const MapText = styled.div`
+  margin-bottom: 20px;
   color: black;
+  font-size: 25px;
+`;
+
+const MiniMap = styled.img`
+  height: 300px;
+`;
+
+const LeftHandSideWrapper = styled.div`
+margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const FamousWizardList = styled(Link)`
+  margin-top: 40px;
+  font-size: 30px;
+  padding: 10px;
+  color: rgb(190, 154, 99, 1);
+  background-color: rgb(52, 0, 52, 1);
+  text-decoration: none;
+  text-align: center;
+  width: 50%;
+  border-radius: 50px;
+`;
+
+const RightHandSideWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const RandomWizardText = styled.div`
+margin-top: 5px;
+padding: 10px;
+border-radius: 50px;
+width: 50%;
+text-align: center;
+  font-size: 30px;
+  color: rgb(190, 154, 99, 1);
+  background-color: rgb(52, 0, 52, 1);
 `;
 
 const HomePageInfo = styled.div`
@@ -62,12 +133,16 @@ const HomePageInfo = styled.div`
   justify-content: space-between;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  height: 150px;
+  width: fit-content;
+`;
 
 const RandomWizard = styled(Link)`
   text-decoration: none;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const Announcements = styled.div`
@@ -83,22 +158,22 @@ const Announcements = styled.div`
 const AnnouncementsBox = styled.div`
   max-width: 100em;
   margin: 4em auto 2em;
-  border: 5px solid #F0F0FF;
+  border: 5px solid #f0f0ff;
   overflow: hidden;
-  box-shadow: 0 .25em .5em #CCC,inset 0 0 1em .25em #CCC;
-  
-:first-child {
-  
-  animation-duration: 15s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+  box-shadow: 0 0.25em 0.5em #ccc, inset 0 0 1em 0.25em #ccc;
 
-  @keyframes defilement-rtl {
-    0% {
-      transform: translate3d(0,0,0);
-    }
-    100% {
-      transform: translate3d(-100%,0,0);
+  :first-child {
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    @keyframes defilement-rtl {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-100%, 0, 0);
+      }
     }
   }
 `;
@@ -112,6 +187,7 @@ const Welcome = styled.div`
 `;
 
 const Wrapper = styled.div`
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   min-height: 92vh;
@@ -128,6 +204,7 @@ const Wrapper = styled.div`
 const Countdown = styled.div`
   width: 300px;
   font-size: 30px;
+  text-align: center;
   &.months {
     border: 4px green dashed;
   }

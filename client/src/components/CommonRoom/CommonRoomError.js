@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 const CommonRoomError = () => {
     const navigate = useNavigate();
+
+    // Redirect avec 5 secs
     setTimeout(() => {
         navigate(`/`);
     }, 5000);
@@ -16,7 +18,7 @@ const CommonRoomError = () => {
         />
         <ErrorMessage>
             <Quote>"Oh, dear, we are in trouble." <QuoteAuthor>Argus Filch</QuoteAuthor></Quote>
-            <div>I think you need to be logged to enter your common room.</div>
+            <div>Please try again.</div>
         </ErrorMessage>
         
         </Wrapper>

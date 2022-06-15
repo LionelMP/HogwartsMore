@@ -24,14 +24,12 @@ const WizardDetails = () => {
             <Info>
                 {wizard.name && <WizardName>Name: {`${wizard.name}`}</WizardName>}
             {wizard.dateOfBirth && <BirthDate>Birthdate: {`${wizard.dateOfBirth}`}</BirthDate>}
-            {wizard.house && <House>House: {`${wizard.house}`}</House>}
-            {wizard.wand.wood || wizard.wand.core && 
+            {wizard.house && <House>House: {`${wizard.house}`}</House>}            
             <Wand>Wand
                 {wizard.wand.wood && <Wood>Wood: {`${wizard.wand.wood}`}</Wood>}
                 {wizard.wand.core && <Core>Core: {`${wizard.wand.core}`}</Core>}
                 {wizard.wand.length && <Length>Length: {`${wizard.wand.length}`}</Length>}
-            </Wand>
-            }
+            </Wand>            
             {wizard.patronus && <Patronus>Patronus: {`${wizard.patronus}`}</Patronus>}
             {wizard.actor && <Actor>Actor: {`${wizard.actor}`}</Actor>}
             </Info>

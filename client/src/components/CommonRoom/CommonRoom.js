@@ -95,22 +95,24 @@ overflow: hidden;
 const Image = styled.img`
 position: absolute;
 opacity: 0.7;
-width: 33vw;
-overflow: hidden;
 z-index: 1;
+object-fit: cover;
+height: 92vh;
 `;
 
 const HouseFeed = styled.div`
 display: flex;
 flex-direction: column;
 z-index: 1;
-overflow: hidden;
+overflow-y: scroll;
+width: 34vw;
 `;
 
 const Wrapper = styled.div`
 overflow: hidden;
 display: flex;
 justify-content: center;
+height: 92vh;
   &.Gryffindor {
     background-color: var(--gryffindor-color);
   }
@@ -123,7 +125,6 @@ justify-content: center;
   &.Slytherin {
     background-color: var(--slytherin-color);
   }
-  height: 92vh;
 `;
 
 const CommonRoomImage = styled.img`

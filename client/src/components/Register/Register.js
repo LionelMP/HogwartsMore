@@ -2,10 +2,13 @@ import styled from "styled-components";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../CurrentUser/CurrentUserContext";
+import Passwords from "./Passwords";
 
 const Register = () => {
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newConfirmation, setNewConfirmation] = useState("");
   const [selectedSpell, setSelectedSpell] = useState("");
   const [selectedWeakness, setSelectedWeakness] = useState("");
   const [selectedSkill, setSelectedSkill] = useState("");
@@ -19,6 +22,12 @@ const Register = () => {
     let houses = { Gryffindor: 0, Ravenclaw: 0, Slytherin: 0, Hufflepuff: 0 };
 
     ev.preventDefault();
+
+    if (newConfirmation !== newPassword)
+    {
+      alert(`Your confirmation does not match your password, try again.`);
+      return;
+    }
 
     // Sorting test, logic should change if new questions added
     // Adding points
@@ -82,17 +91,15 @@ const Register = () => {
         name: newName,
         email: newEmail.toLocaleLowerCase(),
         house: house,
+        password: newPassword
       }),
     })
       .then((res) => {
-        console.log(res);
         return res.json();
       })
       .then((data) => {
         if (data.status === 201) {
           setCurrentUser(data.data);
-          console.log("this is data", data);
-          console.log("this is data.data", data.data);
           if (data.data) {
             navigate(`/`);
           }
@@ -114,7 +121,7 @@ const Register = () => {
   return (
     <Wrapper>
       <Form onSubmit={handleSubmit}>
-        <h1>Registration form</h1>
+        <Title>Registration form</Title>
         <div className="centeredInput">
           <label htmlFor="name">Name:</label>
           <input
@@ -140,6 +147,12 @@ const Register = () => {
             }}
           />
         </div>
+        <Passwords 
+        newPassword={newPassword}
+        setNewPassword={setNewPassword}
+        newConfirmation={newConfirmation}
+        setNewConfirmation={setNewConfirmation}
+        />
         <Question>
           You're locked in a duel with a skilled opponent. They fire an unknown
           spell at you, and you shout…
@@ -217,6 +230,12 @@ const Register = () => {
 };
 
 export default Register;
+
+const Title = styled.div`
+font-size: 30px;
+margin-bottom: 10px;
+text-align: center;
+`;
 
 const Button = styled.button`
   font-size: 25px;

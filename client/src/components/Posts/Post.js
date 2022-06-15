@@ -8,40 +8,20 @@ const Post = ({ post }) => {
   let time = format(new Date(post.timestamp), "dd LLL yyyy hh:mm a", {
     locale: enCA,
   });
-
-  let today = format(new Date(), "dd LLL yyyy hh:mm a", {
-    locale: enCA,
-  });
-
-  let postingTime = new Date(post.timestamp);
   
   // Evaluating the freshness of a message
-  let fresh = false;
+  let postingTime = new Date(post.timestamp).getTime();
 
-  let now = new Date();
+  let now = new Date().getTime();
 
-  let diffMs = (postingTime - time);
-  let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-  if (time === today)
-  {
-    console.log("Same day!");
-  }
-  
-console.log("look here!", time, today);
-console.log(postingTime, "!!!", now, "1111", diffMs);
-
-  if (diffMins < 10)
-  {
-    fresh = true;
-  }
-
+  let diffMs = (now - postingTime);
     
   return (
     <PostBox>
         <PostInfo>
         <PostAuthor>{post.author}</PostAuthor>
         <PostTime>{time}</PostTime>
-        <GiOwl style={{color:"blue"}} />
+         {diffMs < 600000 && <GiOwl style={{color:"blue"}} />}
       </PostInfo>
       <PostContent>
         <PostText>
@@ -55,22 +35,24 @@ console.log(postingTime, "!!!", now, "1111", diffMs);
 export default Post;
 
 const PostBox = styled.div`
+width: 33vw;
 z-index: 3;
 margin: 3px;
 `;
 
 const PostInfo = styled.div`
 display: flex;
+width: fit-content;
+border-radius: 5px;
 background-color: rgb(250, 250, 250, 0.7);
-box-sizing: content-box;
 `;
 
-const PostAuthor = styled.div`
+const PostAuthor = styled.span`
 font-size: 20px;
 margin-right: 5px;
 `;
 
-const PostTime = styled.div`
+const PostTime = styled.span`
 display: flex;
 align-items: flex-end;
 `;
@@ -79,6 +61,7 @@ const PostContent = styled.div`
 padding: 5px;
 background-color: rgb(250, 250, 250, 0.8);
 border-radius: 20px;
+width: fit-content;
 `;
 
 const PostText = styled.div`

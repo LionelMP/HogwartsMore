@@ -1,5 +1,7 @@
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -13,7 +15,9 @@ const options = {
 const signin = async (req, res) => {
   // Creates a new user info
   const client = new MongoClient(MONGO_URI, options);
-  let email = req.body.email.toLowerCase();
+  const email = req.body.email.toLowerCase();
+  const selectedPassword = req.body.password;
+  console.log("req.body", req.body);
 
   // Make a try
   try {
@@ -24,14 +28,21 @@ const signin = async (req, res) => {
     // For a unique user
     const result = await db.collection("users").findOne({ email });
 
-    console.log(result);
+    console.log("my user", result); //that's my user
+    if (!result) {
+      res.status(404).json({ status: 404, data: "Not found." });
+      client.close();
+      console.log("disconnected!");
+    } else {
+      const match = await bcrypt.compare(selectedPassword, result.password);
 
-    client.close();
-    console.log("disconnected!");
+      client.close();
+      console.log("disconnected!");
 
-    result
-      ? res.status(200).json({ status: 200, data: result })
-      : res.status(404).json({ status: 404, data: "Not found." });
+      match
+        ? res.status(200).json({ status: 200, data: result })
+        : res.status(401).json({ status: 401, data: "Wrong password." });
+    }
   } catch (err) {
     // If the try fails
     console.log(err.stack);
@@ -86,36 +97,43 @@ const addUser = async (req, res) => {
     const db = client.db("HogwartsMore");
     console.log("connected");
 
-    // Verifying and make a query to find one with the same email    
-    if (typeof req.body.email !== "string")
-    {
+    // Verifying and make a query to find one with the same email
+    if (typeof req.body.email !== "string") {
       return res.status(400).json({ status: 400, data: "Invalid email." });
     }
-    
-    if (typeof req.body.name === "string")
-    {
+
+    if (typeof req.body.name === "string") {
       newUser.name = req.body.name;
-    }
-    else
-    {
+    } else {
       return res.status(400).json({ status: 400, data: "Invalid name." });
     }
 
     // Is already existing account ?
     const givenEmail = req.body.email;
-    const emailQuery = {email: givenEmail};
+    const emailQuery = { email: givenEmail };
     const duplicata = await db.collection("users").findOne(emailQuery);
 
-    if (duplicata)
-    {
-      return res.status(400).json({ status: 400, data: "This email is already used." });
+    if (duplicata) {
+      return res
+        .status(400)
+        .json({ status: 400, data: "This email is already used." });
     }
 
     // All good
     newUser.house = req.body.house;
     newUser.email = req.body.email;
+    const newPassword = req.body.password;
 
+    // Hashing the password
+    const salt = await bcrypt.genSalt(saltRounds);
+    newUser.password = await bcrypt.hash(newPassword, salt);
     const result = await db.collection("users").insertOne(newUser);
+    // bcrypt.genSalt(saltRounds, function (err, salt) {
+    //   bcrypt.hash(newPassword, salt, function (err, hash) {
+    //     newUser.password = hash;
+    //   });
+    // });
+
     console.log("this is result", result);
     console.log("this is newUser", newUser);
 
@@ -124,7 +142,7 @@ const addUser = async (req, res) => {
     console.log("disconnected!");
     res.status(201).json({
       status: 201,
-      data: newUser
+      data: newUser,
     });
   } catch (err) {
     console.log(err.stack);
@@ -165,8 +183,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-
-const getHouseFeed = async (req,res) => {
+const getHouseFeed = async (req, res) => {
   // Creates a new client
   const client = new MongoClient(MONGO_URI, options);
   const house = req.params.house; // Identifies the house
@@ -198,7 +215,7 @@ const addPost = async (req, res) => {
   // Creates a new client
   const client = new MongoClient(MONGO_URI, options);
   const userHouse = req.params.house; // Identifies the house
-  
+
   // Make a try
   try {
     // Connect to the client
@@ -209,29 +226,64 @@ const addPost = async (req, res) => {
     const db = client.db("HogwartsMore");
     console.log("connected");
 
-    // Verifying    
-    if (typeof req.body.content !== "string")
-    {
+    // Verifying
+    if (typeof req.body.content !== "string") {
       return res.status(400).json({ status: 400, data: "Invalid post." });
-    }    
-   
+    }
+
     // All good
     newPost.author = req.body.name;
     newPost.timestamp = new Date().toISOString();
     newPost.content = req.body.content;
 
-  // Insert it in the array of feed already existing 
-    const result = await db.collection("HouseFeeds").updateOne(
-      { house: userHouse },
-      { $push: { feed: newPost } }
-    );
+    // Insert it in the array of feed already existing
+    const result = await db
+      .collection("HouseFeeds")
+      .updateOne({ house: userHouse }, { $push: { feed: newPost } });
 
     // Closing connection
     client.close();
     console.log("disconnected!");
     res.status(201).json({
       status: 201,
-      data: newPost
+      data: newPost,
+    });
+  } catch (err) {
+    console.log(err.stack);
+    res.status(500).json({ status: 500, data: req.body, message: err.message });
+  }
+};
+
+const addMark = async (req, res) => {
+  // Creates a new client
+  const client = new MongoClient(MONGO_URI, options);
+
+  // Make a try
+  try {
+    // Connect to the client
+    await client.connect();
+    const newMark = {};
+    const course = req.body.course;
+    const userName = req.body.name
+
+    // Connecting to database
+    const db = client.db("HogwartsMore");
+    console.log("connected");
+
+    newMark.course = course;
+    newMark.score = req.body.score;
+
+    // Insert it in the array of marks
+    const result = await db
+      .collection("users")
+      .updateOne({ name: userName }, { $push: { marks: newMark } });
+
+    // Closing connection
+    client.close();
+    console.log("disconnected!");
+    res.status(201).json({
+      status: 201,
+      data: newPost,
     });
   } catch (err) {
     console.log(err.stack);
@@ -245,5 +297,6 @@ module.exports = {
   addUser,
   deleteUser,
   getHouseFeed,
-  addPost
+  addPost,
+  addMark
 };

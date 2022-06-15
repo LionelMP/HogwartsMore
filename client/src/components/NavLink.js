@@ -29,7 +29,7 @@ const NavLink = () => {
       ) : (
         <LoggedIn>
           <GreetingsButton to={`/common-room`}>
-            Hello {currentUser.name} !
+            {currentUser.house} common room
           </GreetingsButton>
           <LogOut onClick={handleClick}>
             <FaBroom />LogOut
